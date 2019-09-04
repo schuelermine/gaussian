@@ -28,7 +28,9 @@ i :: Gaussian
 i = 0 :+ 1
 
 magnitude :: Floating c => Gaussian -> c
-magnitude = sqrt . fromInteger . real . abs
+magnitude (a :+ b) = sqrt $ (fromInteger a ^ two) + (fromInteger b ^ two)
+  where
+    two = 2 :: Integer
 
 rotate_right :: Gaussian -> Gaussian
 rotate_right = (* (-i))
