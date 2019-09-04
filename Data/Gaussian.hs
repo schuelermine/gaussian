@@ -1,6 +1,8 @@
+module Gaussian where
+
 data Gaussian = (:+)
   {
-    real :: Integer
+    real :: Integer,
     imaginary :: Integer
   } deriving
     (Show, Read, Eq)
@@ -10,7 +12,7 @@ instance Num Gaussian
     (a1 :+ b1) + (a2 :+ b2) = (a1 + a2) :+ (b1 + b2)
     (a1 :+ b1) - (a2 :+ b2) = (a1 - a2) :+ (b1 - b2)
     (a1 :+ b1) * (a2 :+ b2) = (a1 * a2 - b1 * b2) :+ (a1 * b2 + a2 * b1)
-    abs (a :+ b) = (a ^ two) + (b ^ two)
+    abs (a :+ b) = ((a ^ two) + (b ^ two)) :+ 0
       where
         two = 2 :: Integer
     signum = id
