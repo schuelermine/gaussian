@@ -37,12 +37,14 @@ magnitude (a :+ b) = sqrt $ (fromInteger a ^ two) + (fromInteger b ^ two)
   where
     two = 2 :: Integer
       -- This prevents compiler warnings about defaulting types.
+  -- Equivalent to sqrt . fromInteger . real . abs
 
 norm :: Gaussian -> Integer
 norm (a :+ b) = (a ^ two) + (b ^ two)
   where
     two = 2 :: Integer
       -- This prevents compiler warnings about defaulting types.
+  -- Equivalent to real . abs
 
 conjugate :: Gaussian -> Gaussian
 conjugate (a :+ b) = (a :+ negate b)
@@ -72,6 +74,11 @@ flip_y = conjugate
 swap_x_y :: Gaussian -> Gaussian
 swap_x_y (a :+ b) = (b :+ a)
   -- Utility function, swaps real and imaginary axes.
+
+flip_diag_2 :: Gaussian -> Gaussian
+flip_diag_2 (a :+ b) = (negate b :+ negate a)
+  -- Utility function, reflects on x = -y
+  -- Equivalent to negate . swap_x_y
 
 toComplex :: Num p => Gaussian -> Complex.Complex p
 toComplex (a :+ b) = (fromInteger a Complex.:+ fromInteger b)
