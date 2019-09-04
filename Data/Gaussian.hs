@@ -26,7 +26,7 @@ instance Num Gaussian
     negate (a :+ b) = negate a :+ negate b
     fromInteger x = x :+ 0
   -- The Num instance for Gaussian.
-  -- We use the euclidean norm as abs. norm(a + bi) = a^2 + b^2
+  -- We use the euclidean norm as abs: norm(a + bi) = a^2 + b^2
 
 i :: Gaussian
 i = 0 :+ 1
@@ -82,5 +82,5 @@ flip_diag_2 (a :+ b) = (negate b :+ negate a)
 
 toComplex :: Num p => Gaussian -> Complex.Complex p
 toComplex (a :+ b) = (fromInteger a Complex.:+ fromInteger b)
-  -- Converts a Gaussian to any complex number (Num p => Complex p)
+  -- Converts a Gaussian to any complex number: Num p => Complex p
   -- Fully qualified operators to avoid clashing.
