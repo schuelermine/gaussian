@@ -24,3 +24,6 @@ conjugate (a :+ b) = (a :+ negate b)
 
 i :: Gaussian
 i = 0 :+ 1
+
+magnitude :: Floating c => Gaussian -> c
+magnitude = sqrt . fromInteger . real . abs
