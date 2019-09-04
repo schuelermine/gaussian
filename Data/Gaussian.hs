@@ -1,6 +1,8 @@
 module Gaussian where
 
 import qualified Data.Complex as Complex
+  -- Enables toComplex.
+  -- Qualified to avoid clashing.
 
 data Gaussian = (:+)
   {
@@ -8,6 +10,8 @@ data Gaussian = (:+)
     imaginary :: Integer
   } deriving
     (Show, Read, Eq)
+  -- The gaussian integer type.
+  -- A gaussian integer is a complex number of the form a + bi where a and b are integers.
 
 instance Num Gaussian
   where
@@ -17,40 +21,59 @@ instance Num Gaussian
     abs (a :+ b) = ((a ^ two) + (b ^ two)) :+ 0
       where
         two = 2 :: Integer
+          -- This prevents compiler warnings about defaulting types.
     signum = id
     negate (a :+ b) = negate a :+ negate b
     fromInteger x = x :+ 0
+  -- The Num instance for Gaussian.
+  -- We use the euclidean norm as abs. norm(a + bi) = a^2 + b^2
 
 i :: Gaussian
 i = 0 :+ 1
+  -- The imaginary unit, equal to sqrt(-1).
 
 magnitude :: Floating c => Gaussian -> c
 magnitude (a :+ b) = sqrt $ (fromInteger a ^ two) + (fromInteger b ^ two)
   where
     two = 2 :: Integer
+      -- This prevents compiler warnings about defaulting types.
 
 norm :: Gaussian -> Integer
 norm (a :+ b) = (a ^ two) + (b ^ two)
   where
     two = 2 :: Integer
+      -- This prevents compiler warnings about defaulting types.
 
 conjugate :: Gaussian -> Gaussian
 conjugate (a :+ b) = (a :+ negate b)
+  -- The complex conjugate.
+  -- Effectively flips about the real axis.
 
-rotate_right :: Gaussian -> Gaussian
-rotate_right (a :+ b) = (b :+ negate a)
+rotate_cw :: Gaussian -> Gaussian
+rotate_cw (a :+ b) = (b :+ negate a)
+  -- Rotate a gaussian integer clockwise.
+  -- Equivalent to multiplying by i.
 
-rotate_left :: Gaussian -> Gaussian
-rotate_left (a :+ b) = (negate b :+ a)
+rotate_ccw :: Gaussian -> Gaussian
+rotate_ccw (a :+ b) = (negate b :+ a)
+  -- Rotate a gaussian integer counterclockwise.
+  -- Equivalent to multiplying by -i.
 
 flip_x :: Gaussian -> Gaussian
 flip_x (a :+ b) = (negate a :+ b)
+  -- Flips on imaginary axis.
+  -- Analogous to conjugate.
 
 flip_y :: Gaussian -> Gaussian
 flip_y = conjugate
+  -- Alias for conjugate.
+  -- See conjugate.
 
 swap_x_y :: Gaussian -> Gaussian
 swap_x_y (a :+ b) = (b :+ a)
+  -- Utility function, swaps real and imaginary axes.
 
 toComplex :: Num p => Gaussian -> Complex.Complex p
 toComplex (a :+ b) = (fromInteger a Complex.:+ fromInteger b)
+  -- Converts a Gaussian to any complex number (Num p => Complex p)
+  -- Fully qualified operators to avoid clashing.
