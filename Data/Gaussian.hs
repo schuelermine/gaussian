@@ -1,5 +1,7 @@
 module Gaussian where
 
+import qualified Data.Complex as Complex
+
 data Gaussian = (:+)
   {
     real :: Integer,
@@ -27,3 +29,12 @@ i = 0 :+ 1
 
 magnitude :: Floating c => Gaussian -> c
 magnitude = sqrt . fromInteger . real . abs
+
+rotate_right :: Gaussian -> Gaussian
+rotate_right = (* (-i))
+
+rotate_left :: Gaussian -> Gaussian
+rotate_left = (* i)
+
+toComplex :: Num p => Gaussian -> Complex.Complex p
+toComplex (a :+ b) = (fromInteger a Complex.:+ fromInteger b)
