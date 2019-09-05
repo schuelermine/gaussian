@@ -1,8 +1,14 @@
+{-# LANGAUGE NoImplicitPrelude #-}
+
 module Gaussian where
 
 import qualified Data.Complex as Complex
   -- Enables toComplex.
   -- Qualified to avoid clashing.
+
+import Prelude hiding (quotRem)
+
+import qualified Data.Ratio as Ratio
 
 data Gaussian = (:+)
   {
@@ -27,6 +33,14 @@ instance Num Gaussian
     fromInteger x = x :+ 0
   -- The Num instance for Gaussian.
   -- We use the euclidean norm as abs: norm(a + bi) = a^2 + b^2
+
+quotRem :: Gaussian -> Gaussian -> (Gaussian, Gaussian)
+quotRem z1@(a1 :+ b1) z2@(a2 :+ b2) = (z3, z1 - z3 * z2)
+  where
+    z3 = a3 :+ b3
+    a3 = floor $ (a1 * a2 + b1 * b2) % (a2 ^ two + b2 ^ two)
+    b3 = floor $ (b1 * a2 - a1 * b2) % (a2 ^ two + b2 ^ two)
+    two = 2 :: Integer
 
 i :: Gaussian
 i = 0 :+ 1
