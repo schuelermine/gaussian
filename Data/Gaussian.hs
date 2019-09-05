@@ -6,8 +6,8 @@ import qualified Data.Complex as Complex
 
 data Gaussian = (:+)
   {
-    real :: Integer,
-    imaginary :: Integer
+    real :: !Integer,
+    imaginary :: !Integer
   } deriving
     (Show, Read, Eq)
   -- The gaussian integer type.
