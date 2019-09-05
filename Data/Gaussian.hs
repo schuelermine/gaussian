@@ -1,4 +1,4 @@
-module Gaussian where
+module Data.Gaussian where
 
 import qualified Data.Complex as Complex
   -- Enables toComplex.
