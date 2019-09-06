@@ -6,10 +6,6 @@ import qualified Data.Complex as Complex
   -- Enables toComplex.
   -- Qualified to avoid clashing.
 
-import Prelude hiding (quotRem)
-
-import qualified Data.Ratio as Ratio
-
 data Gaussian = (:+)
   {
     real :: !Integer,
