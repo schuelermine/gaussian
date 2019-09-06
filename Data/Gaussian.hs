@@ -1,4 +1,4 @@
-{-# LANGAUGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 
 module Data.Gaussian where
 
@@ -38,8 +38,8 @@ quotRem :: Gaussian -> Gaussian -> (Gaussian, Gaussian)
 quotRem z1@(a1 :+ b1) z2@(a2 :+ b2) = (z3, z1 - z3 * z2)
   where
     z3 = a3 :+ b3
-    a3 = floor $ (a1 * a2 + b1 * b2) % (a2 ^ two + b2 ^ two)
-    b3 = floor $ (b1 * a2 - a1 * b2) % (a2 ^ two + b2 ^ two)
+    a3 = floor $ (a1 * a2 + b1 * b2) Ratio.% (a2 ^ two + b2 ^ two)
+    b3 = floor $ (b1 * a2 - a1 * b2) Ratio.% (a2 ^ two + b2 ^ two)
     two = 2 :: Integer
 
 i :: Gaussian
